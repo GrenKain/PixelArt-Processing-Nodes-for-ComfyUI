@@ -1,0 +1,14 @@
+[project]
+name = "pixelart-processing-nodes-for-comfyui"
+description = "This repository provides custom nodes for ComfyUI that enable pixel art style image processing, including downscaling, upscaling, color quantization, and resolution adjustments."
+version = "1.0.0"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/GrenKain/PixelArt-Processing-Nodes-for-ComfyUI"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "PixelArt-Processing-Nodes-for-ComfyUI"
+Icon = ""
