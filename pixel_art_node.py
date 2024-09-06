@@ -2,9 +2,7 @@ from sklearn.cluster import KMeans
 from skimage import color
 import torch
 import torch.nn.functional as F
-from PIL import Image
 import numpy as np
-import os
 
 class PixelArtNode:
     @classmethod
@@ -26,14 +24,6 @@ class PixelArtNode:
                     "step": 1,
                     "display": "slider"
                 }),
-                "save_format": (["bmp", "png", "webp"], {
-                    "default": "png",
-                    "display": "dropdown"
-                }),
-                "save_path": ("STRING", {
-                    "default": "output_image.png",
-                    "multiline": False
-                }),
             }
         }
 
@@ -41,7 +31,7 @@ class PixelArtNode:
     FUNCTION = "execute"
     CATEGORY = "Image/Effects"
 
-    def execute(self, image, num_colors, pixel_size, save_format, save_path):
+    def execute(self, image, num_colors, pixel_size):
         batch_size, height, width, channels = image.shape
         
         # Downscale the image to pixelate
@@ -71,13 +61,6 @@ class PixelArtNode:
 
         # Convert the result to a tensor
         quantized_image_tensor = torch.tensor(quantized_rgb_image).unsqueeze(0).float()
-
-        # Save the image using PIL
-        pil_image = Image.fromarray((quantized_rgb_image * 255).astype('uint8'))
-        save_dir = os.path.dirname(save_path)
-        if save_dir and not os.path.exists(save_dir):
-            os.makedirs(save_dir)
-        pil_image.save(save_path, format=save_format.upper())
 
         return (quantized_image_tensor,)
 
